@@ -17,13 +17,13 @@ runs:
         repository: 'gendloop/Tools'
         path: ${{ env.downloader_path }}
         ref: 'main'
-        token: $GENDLOOP_ACCESS_TOKEN
+        # token: $GENDLOOP_ACCESS_TOKEN
 
     - name: checkout-curr-repo
       uses: actions/checkout@v3
       with: 
         path: ./Temp
-        token: $GENDLOOP_ACCESS_TOKEN
+        # token: $GENDLOOP_ACCESS_TOKEN
       
     - name: find-bash.exe
       shell: cmd
