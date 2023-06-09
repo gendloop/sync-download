@@ -4,6 +4,8 @@ description: 'sync-download'
 
 runs:
   using: 'composite'
+  env:
+    downloader_path: './TempTools'
   steps:
     - name: checkout-downloader
       uses: actions/checkout@v3
