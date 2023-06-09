@@ -1,0 +1,51 @@
+name: sync-download
+author: gendloop
+description: 'sync-download'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: checkout-downloader
+      uses: actions/checkout@v3
+      with: 
+        repository: 'gendloop/Tools'
+        path: ${{ env.downloader_path }}
+        ref: 'main'
+        token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
+
+    - name: checkout-curr-repo
+      uses: actions/checkout@v3
+      with: 
+        path: ./Temp
+        token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
+      
+    - name: find-bash.exe
+      shell: cmd
+      run: |
+        where bash
+
+    - name: add-path-to-environment-variable
+      shell: bash
+      run: |
+        if [[ ${RUNNER_OS} == "windows-latest" ]] 
+        then
+          echo "PATH=\${PATH}:/c/Program Files/Git/bin" >> $GITHUB_ENV
+        fi
+
+    - name: sync-downloaded-files
+      shell: powershell
+      run: |
+        ${{ env.downloader_path }}/Common/DownloadFileFromRepo/downloadFilesFromRepo.ps1 ./Temp/scripts
+
+    - name: push-to-repo
+      working-directory: ${{ github.workspace }}/Temp
+      shell: bash
+      run: |
+        git config --global user.name "$GITHUB_ACTOR"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git checkout ${{ github.ref_name }}
+        git pull
+        git add .
+        (git commit -m "chore: sync-downloaded-files") || true
+        (git push) || true
+
