@@ -1,6 +1,12 @@
 name: sync-download
 author: gendloop
 description: 'sync-download'
+inputs:
+# Required
+  token:
+    description: 'Personal token'
+    required: true
+    default: ${{ github.token }}
 
 runs:
   using: 'composite'
@@ -9,7 +15,6 @@ runs:
       uses: actions/checkout@v3
       with: 
         path: ./Temp
-        # token: $GENDLOOP_ACCESS_TOKEN
 
     - name: checkout-downloader
       uses: actions/checkout@v3
@@ -19,7 +24,7 @@ runs:
         repository: 'gendloop/Tools'
         path: ${{ env.downloader_path }}
         ref: 'main'
-        # token: $GENDLOOP_ACCESS_TOKEN
+        token: ${{ inputs.token }}
       
     - name: find-bash.exe
       shell: cmd

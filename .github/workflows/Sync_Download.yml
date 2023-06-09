@@ -12,8 +12,8 @@ on:
 jobs:
   sync_download:
     runs-on: windows-2019
-    env:
-      GENDLOOP_ACCESS_TOKEN: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
     steps:
       - name: sync-download
         uses: gendloop/sync-download@main
+        with:
+          token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
