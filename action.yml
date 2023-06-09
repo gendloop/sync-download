@@ -9,17 +9,20 @@ runs:
       uses: actions/checkout@v3
       env:
         downloader_path: './TempTools'
+        GENDLOOP_ACCESS_TOKEN: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
       with: 
         repository: 'gendloop/Tools'
         path: ${{ env.downloader_path }}
         ref: 'main'
-        token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
+        token: $GENDLOOP_ACCESS_TOKEN
 
     - name: checkout-curr-repo
       uses: actions/checkout@v3
+      env:
+        GENDLOOP_ACCESS_TOKEN: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
       with: 
         path: ./Temp
-        token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
+        token: $GENDLOOP_ACCESS_TOKEN
       
     - name: find-bash.exe
       shell: cmd
