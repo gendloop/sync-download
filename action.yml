@@ -5,6 +5,10 @@ description: 'sync-download'
 runs:
   using: 'composite'
   steps:
+    - run: |
+        echo $GENDLOOP_ACCESS_TOKEN
+      shell: bash
+
     - name: checkout-downloader
       uses: actions/checkout@v3
       env:
