@@ -4,11 +4,11 @@ description: 'sync-download'
 
 runs:
   using: 'composite'
-  env:
-    downloader_path: './TempTools'
   steps:
     - name: checkout-downloader
       uses: actions/checkout@v3
+      env:
+        downloader_path: './TempTools'
       with: 
         repository: 'gendloop/Tools'
         path: ${{ env.downloader_path }}
@@ -36,6 +36,9 @@ runs:
 
     - name: sync-downloaded-files
       shell: powershell
+      working-directory: ${{ github.workspace }}
+      env:
+        downloader_path: './TempTools'
       run: |
         ${{ env.downloader_path }}/Common/DownloadFileFromRepo/downloadFilesFromRepo.ps1 ./Temp/scripts
 
