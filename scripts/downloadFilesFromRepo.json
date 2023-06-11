@@ -24,17 +24,6 @@
             "branch": "main",
             "is_private": false,
             "token": ""
-        },
-        {
-            "files": [
-                ".github/workflows/Sync_Download.yml"
-            ],
-            "local_dir": "../.github/workflows",
-            "user": "gendloop",
-            "repo": "sync-download",
-            "branch": "main",
-            "is_private": false,
-            "token": ""
         }
     ]
 }
