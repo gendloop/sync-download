@@ -23,4 +23,3 @@ jobs:
         with:
           token: ${{ secrets.GENDLOOP_ACCESS_TOKEN }}
 ```
-
