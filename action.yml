@@ -27,21 +27,30 @@ runs:
         ref: 'main'
         token: ${{ inputs.token }}
       
-    - name: find-bash.exe
-      shell: cmd
-      run: |
-        where bash
+    # - name: find-bash.exe
+    #   shell: cmd
+    #   run: |
+    #     where bash
 
-    - name: add-path-to-environment-variable
-      shell: bash
+    # - name: add-path-to-environment-variable
+    #   shell: bash
+    #   run: |
+    #     if [[ ${RUNNER_OS} == "windows-latest" ]] 
+    #     then
+    #       echo "PATH=\${PATH}:/c/Program Files/Git/bin" >> $GITHUB_ENV
+    #     fi
+    - name: install git bash
+      shell: pwsh
       run: |
-        if [[ ${RUNNER_OS} == "windows-latest" ]] 
-        then
-          echo "PATH=\${PATH}:/c/Program Files/Git/bin" >> $GITHUB_ENV
-        fi
+        sudo apt-get update
+        sudo apt-get install -y git bash
+
+        # git config --global core.autocrlf false
+        # git config --global core.eol lf
+        git config --global credential.helper 'cache --timeout=3600'
 
     - name: sync-downloaded-files
-      shell: powershell
+      shell: pwsh
       working-directory: ${{ github.workspace }}
       env:
         downloader_path: './TempTools'
