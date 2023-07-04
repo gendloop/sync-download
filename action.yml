@@ -57,15 +57,10 @@ runs:
       run: |
         ${{ env.downloader_path }}/Common/DownloadFileFromRepo/downloadFilesFromRepo.ps1 ./Temp/scripts
 
-    - name: push-to-repo
-      working-directory: ${{ github.workspace }}/Temp
-      shell: bash
-      run: |
-        git config --global user.name "$GITHUB_ACTOR"
-        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git checkout ${{ github.ref_name }}
-        git pull
-        git add .
-        (git commit -m "chore: sync-downloaded-files") || true
-        (git push) || true
+    - name: git-push
+      uses: gendloop/git-push@main
+      with:
+        token: ${{ github.token }}
+        commit: "chore: sync-downloaded-files"
+        workspace: ${{ github.workspace }}/Temp
 
