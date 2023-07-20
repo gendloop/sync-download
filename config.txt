@@ -2,4 +2,4 @@
 PROJECT_NAME=sync-download
 sync-download_VERSION_MAJOR=1
 sync-download_VERSION_MINOR=0
-sync-download_VERSION_PATCH=2
+sync-download_VERSION_PATCH=0
