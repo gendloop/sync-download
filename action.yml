@@ -58,7 +58,7 @@ runs:
         ${{ env.downloader_path }}/Common/DownloadFileFromRepo/downloadFilesFromRepo.ps1 ./Temp/scripts
 
     - name: git-push
-      uses: gendloop/git-push@main
+      uses: gendloop/git-push@v1.0.0
       with:
         token: ${{ github.token }}
         commit: "chore: sync-downloaded-files"
