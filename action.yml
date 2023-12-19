@@ -13,7 +13,7 @@ runs:
   steps:
     - name: checkout-curr-repo
       uses: actions/checkout@v3
-      with: 
+      with:
         path: ./Temp
         token: ${{ inputs.token }}
 
@@ -21,12 +21,12 @@ runs:
       uses: actions/checkout@v3
       env:
         downloader_path: './TempTools'
-      with: 
+      with:
         repository: 'gendloop/Tools'
         path: ${{ env.downloader_path }}
         ref: 'main'
         token: ${{ inputs.token }}
-      
+
     # - name: find-bash.exe
     #   shell: cmd
     #   run: |
@@ -35,7 +35,7 @@ runs:
     # - name: add-path-to-environment-variable
     #   shell: bash
     #   run: |
-    #     if [[ ${RUNNER_OS} == "windows-latest" ]] 
+    #     if [[ ${RUNNER_OS} == "windows-latest" ]]
     #     then
     #       echo "PATH=\${PATH}:/c/Program Files/Git/bin" >> $GITHUB_ENV
     #     fi
