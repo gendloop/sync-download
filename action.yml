@@ -57,10 +57,29 @@ runs:
       run: |
         ${{ env.downloader_path }}/Common/DownloadFileFromRepo/downloadFilesFromRepo.ps1 ./Temp/scripts
 
+    - name: get-time
+      shell: bash
+      run: |
+        echo "CURRENT_TIME=$(date -d '+8 hours' +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        echo $CURRENT_TIME
+
+    - name: record-run-time
+      shell: bash
+      if: ${{ github.actor == 'gendloop' }}
+      working-directory: ${{ github.workspace }}/Temp
+      run: |
+        file="sync_log.md"
+        if [ -f $file ]; then
+          echo "$file already exists";
+        else
+          echo "" > $file;
+          echo "create new file: $file";
+        fi
+        sed -i "1s/^/$(echo "${CURRENT_TIME}: run workflow " | sed 's/\//\\\//g')\`${{ github.workflow }}\` \n\n/" $file
+
     - name: git-push
       uses: gendloop/git-push@v1.0.0
       with:
         token: ${{ github.token }}
         commit: "chore: sync-downloaded-files"
         workspace: ${{ github.workspace }}/Temp
-
