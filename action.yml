@@ -71,6 +71,13 @@ runs:
         file="sync_log.md"
         if [ -f $file ]; then
           echo "$file already exists";
+          file_size=$(du -m $file | cut -f1)
+          if [ $file_size -gt 1 ]; then
+            total_lines=$(wc -l < $file)
+            half_lines=$((total_lines/2+1))
+            sed -i "${half_lines},${total_lines}d" $file
+            echo "Deleted half of file: $file"
+          fi
         else
           echo "" > $file;
           echo "create new file: $file";
