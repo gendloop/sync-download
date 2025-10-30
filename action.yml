@@ -82,10 +82,10 @@ runs:
           echo "" > $file;
           echo "create new file: $file";
         fi
-        sed -i "1s/^/$(echo "${CURRENT_TIME}: run workflow " | sed 's/\//\\\//g')\`${{ github.workflow }}\` \n\n/" $file
+        sed -i "1s/^/$(echo "${CURRENT_TIME}: run workflow " | sed 's/\//\\\//g')\`${{ github.workflow }}\`\n\n/" $file
 
     - name: git-push
-      uses: gendloop/git-push@v1.0.0
+      uses: gendloop/git-push@main
       with:
         token: ${{ github.token }}
         commit: "chore: sync-downloaded-files"
