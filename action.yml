@@ -27,18 +27,6 @@ runs:
         ref: 'main'
         token: ${{ inputs.token }}
 
-    # - name: find-bash.exe
-    #   shell: cmd
-    #   run: |
-    #     where bash
-
-    # - name: add-path-to-environment-variable
-    #   shell: bash
-    #   run: |
-    #     if [[ ${RUNNER_OS} == "windows-latest" ]]
-    #     then
-    #       echo "PATH=\${PATH}:/c/Program Files/Git/bin" >> $GITHUB_ENV
-    #     fi
     - name: install git bash
       shell: pwsh
       run: |
@@ -63,26 +51,26 @@ runs:
         echo "CURRENT_TIME=$(date -d '+8 hours' +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo $CURRENT_TIME
 
-    - name: record-run-time
-      shell: bash
-      if: ${{ github.actor == 'gendloop' }}
-      working-directory: ${{ github.workspace }}/Temp
-      run: |
-        file="sync_log.md"
-        if [ -f $file ]; then
-          echo "$file already exists";
-          file_size=$(du -m $file | cut -f1)
-          if [ $file_size -gt 1 ]; then
-            total_lines=$(wc -l < $file)
-            half_lines=$((total_lines/2+1))
-            sed -i "${half_lines},${total_lines}d" $file
-            echo "Deleted half of file: $file"
-          fi
-        else
-          echo "" > $file;
-          echo "create new file: $file";
-        fi
-        sed -i "1s/^/$(echo "${CURRENT_TIME}: run workflow " | sed 's/\//\\\//g')\`${{ github.workflow }}\`\n\n/" $file
+    # - name: record-run-time
+    #   shell: bash
+    #   if: ${{ github.actor == 'gendloop' }}
+    #   working-directory: ${{ github.workspace }}/Temp
+    #   run: |
+    #     file="sync_log.md"
+    #     if [ -f $file ]; then
+    #       echo "$file already exists";
+    #       file_size=$(du -m $file | cut -f1)
+    #       if [ $file_size -gt 1 ]; then
+    #         total_lines=$(wc -l < $file)
+    #         half_lines=$((total_lines/2+1))
+    #         sed -i "${half_lines},${total_lines}d" $file
+    #         echo "Deleted half of file: $file"
+    #       fi
+    #     else
+    #       echo "" > $file;
+    #       echo "create new file: $file";
+    #     fi
+    #     sed -i "1s/^/$(echo "${CURRENT_TIME}: run workflow " | sed 's/\//\\\//g')\`${{ github.workflow }}\`\n\n/" $file
 
     - name: git-push
       uses: gendloop/git-push@main
